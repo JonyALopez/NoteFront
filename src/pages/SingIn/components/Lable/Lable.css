@@ -1,0 +1,7 @@
+.label-container label {
+    color: white;
+    display: flex;
+    font-size: 20px;
+    justify-content:left;
+    align-items: left;
+}
