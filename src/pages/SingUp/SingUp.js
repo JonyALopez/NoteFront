@@ -10,8 +10,6 @@ const SingUp = () => {
     const [name,setName]= useState('');
     const [lastName,setLastName]= useState('');
     const [email,setEmail]= useState('');
-    const [password,setPassword]= useState('');
-    
 
     function handleChange (name,value){
         if(name === 'name'){
@@ -24,17 +22,14 @@ const SingUp = () => {
             setEmail(value);
 
         }
-        if(name==='password'){
-            setPassword(value);
-        }
             
     };
 
-    console.log(name, lastName, email, password)
+    console.log(name, lastName, email)
 
 
     async function handleSubmit(){
-        let account ={name,lastName,email, password}
+        let account ={name,lastName,email}
         if(account){
           /* await fetch (router, {
             method: 'POST', 
@@ -45,7 +40,6 @@ const SingUp = () => {
                 name,
                 lastName,
                 email,
-                password
             })
            })*/
         }
@@ -83,16 +77,6 @@ const SingUp = () => {
                  name:'email',
                  type:'text',
                  placeholder:'Email'
-             }}
-             handleChange= {handleChange}
-             />
-            <br></br>
-             <Input
-             atribute={{
-                 id:'password',
-                 name:'password',
-                 type:'password',
-                 placeholder:'Password'
              }}
              handleChange= {handleChange}
              />
