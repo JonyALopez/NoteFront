@@ -3,19 +3,20 @@ import '../../assets/css/all.css'
 import Lable from "./components/Lable/Lable";
 import Title from './components/Title/Title';
 import Input from '../../commons/Input/Input';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 
 const Login = () => {
 
-    const [user,setUser]= useState('');
+    const [email,setEmail]= useState('');
     const [password,setPassword]= useState('');
     const [passwordError, setPasswordError]= useState(false);
+    const navigate = useNavigate();
 
     function handleChange (name,value){
         if(name === 'user'){
-            setUser(value);
+            setEmail(value);
         }else{
             if(value.length < 10){
                 setPasswordError (true)
@@ -28,11 +29,35 @@ const Login = () => {
     };
 
 
-    function handleSubmit(e){
+   async function handleSubmit(e){
         e.preventDefault();
-        let account ={user, password}
+        let account ={email, password}
         if(account){
-           console.log(account);
+            console.log(account);
+            await fetch("https://apinot3s.herokuapp.com/api/user/signIn", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email,
+                  password,
+                }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  const { validation } = data; //respuesta del back
+                  if (data.succes === false) {
+                    console.log(data);
+                  } else {
+                    console.log(data);
+                    localStorage.setItem("token", data.token); //guardar token en localStorage
+                    localStorage.setItem("token-init-date", new Date().getTime()); //guarda hora actual
+                    //window.location.reload(); //recargar la pagina
+                    navigate("/NewPassword");
+                  }
+                })
+                .catch((err) => console.log(err));
         }
     };
 
