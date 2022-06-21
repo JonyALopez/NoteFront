@@ -25,13 +25,12 @@ const SingUp = () => {
             
     };
 
-    console.log(name, lastName, email)
-
-
-    async function handleSubmit(){
+    async function handleSubmit(e){
+        e.preventDefault();
         let account ={name,lastName,email}
         if(account){
-          /* await fetch (router, {
+            console.log(account);
+           /*await fetch ("https://apinot3s.herokuapp.com/api/user/signUp", {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +40,16 @@ const SingUp = () => {
                 lastName,
                 email,
             })
-           })*/
+           })
+           .then((response)=>response.json())
+           .then((data)=>{
+            if(data.succes==false){
+
+            }else{
+                <Link to={'/'} />
+            }
+           });*/
+           <Link to={'/'}></Link>
         }
     };
 
