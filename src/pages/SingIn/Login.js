@@ -31,7 +31,6 @@ const Login = () => {
     e.preventDefault();
     let account = { email, password };
     if (account) {
-      console.log(account);
       await fetch("https://apinot3s.herokuapp.com/api/user/signIn", {
         method: "POST",
         headers: {

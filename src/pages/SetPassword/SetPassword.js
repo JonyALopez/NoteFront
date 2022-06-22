@@ -62,7 +62,7 @@ const SetPassword = () => {
           atribute={{
             id: "newPassword",
             name: "newPassword",
-            type: "text",
+            type: "password",
             placeholder: "New Password",
           }}
           handleChange={handleChange}
