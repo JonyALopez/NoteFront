@@ -6,47 +6,47 @@ import "../../assets/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../provider/sessionContext";
 
-const SetPassword = () => {
+const ForgotPassword = () => {
 
-  const { session, setSession } = useContext(SessionContext);
-  const [newPassword, setNewPassword] = useState("");
+  
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  console.log(session);
 
   function handleChange(name, value) {
-    if (name === "newPassword") {
-      setNewPassword(value);
+    if (name === "email") {
+      setEmail(value);
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let account = { newPassword };
+    let account = { email };
     if (account) {
-      //console.log(account);
-      await fetch(
-        `https://apinot3s.herokuapp.com/api/user/firsLogin/${session.email}`,
+        console.log(account);
+      await fetch("https://apinot3s.herokuapp.com/api/user/forgotpassword",
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            newPassword,
+            email,
           }),
         }
       )
         .then((response) => response.json())
         .then((data) => {
-          const { newPassword } = data; //respuesta del back
+          const { message } = data; //respuesta del back
+          console.log(message);
           if (data.succes === false) {
             console.log(data);
           } else {
-
+    
             localStorage.setItem("token", data.token); //guardar token en localStorage
             localStorage.setItem("token-init-date", new Date().getTime()); //guarda hora actual
             //window.location.reload(); //recargar la pagina
-            navigate("/Notes");
+            console.log(message);
+            navigate("/");
           }
         })
         .catch((err) => console.log(err));
@@ -56,19 +56,19 @@ const SetPassword = () => {
   return (
     <div>
       <form className="loginBox">
-        <Title text=" New Password" />
+        <Title text=" Forgot Password" />
         <br></br>
         <Input
           atribute={{
-            id: "newPassword",
-            name: "newPassword",
+            id: "email",
+            name: "email",
             type: "text",
-            placeholder: "New Password",
+            placeholder: "email",
           }}
           handleChange={handleChange}
         />
         <br></br>
-        <button onClick={handleSubmit}>Update</button>
+        <button onClick={handleSubmit}>Forgot</button>
 
         <br></br>
       </form>
@@ -76,4 +76,4 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default ForgotPassword;
