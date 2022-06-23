@@ -42,9 +42,6 @@ const SetPassword = () => {
           if (data.succes === false) {
             console.log(data);
           } else {
-
-            localStorage.setItem("token", data.token); //guardar token en localStorage
-            localStorage.setItem("token-init-date", new Date().getTime()); //guarda hora actual
             //window.location.reload(); //recargar la pagina
             navigate("/Notes");
           }

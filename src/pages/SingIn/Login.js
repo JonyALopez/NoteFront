@@ -60,6 +60,7 @@ const Login = () => {
               firstLogin: validation.firstLogin,
               state: validation.state,
               role: validation.role,
+              token: data.token
             });
             if (validation.firstLogin === false) {
               navigate("/Notes");
