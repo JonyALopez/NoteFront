@@ -5,12 +5,15 @@ import Title from "./components/Title/Title";
 import Input from "../../commons/Input/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { SessionContext } from "../../provider/sessionContext";
+import { Alert } from "../alert/Alert";
 
 const Login = () => {
 
   const { session, setSession } = useContext(SessionContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[error,setError] =useState("");
+  const [showError,setShowError] = useState(false)
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
 
@@ -46,6 +49,8 @@ const Login = () => {
           const { validation } = data; //respuesta del back
           if (data.succes === false) {
             console.log(data);
+            setError(data.error)
+            setShowError(true)
           } else {
             console.log(data);
             localStorage.setItem("token", data.token); //guardar token en localStorage
@@ -75,6 +80,7 @@ const Login = () => {
   }
 
   return (
+    <>
     <form className="loginBox">
       <Title text=" Login" />
       <br></br>
@@ -113,6 +119,8 @@ const Login = () => {
       <Link to={"/SingUp"}>SingUp</Link>
       <Link to={"/ForgotPassword"}>ForgotPassword</Link>
     </form>
+     {showError?<Alert message={error}/>:null}
+     </>
   );
 };
 

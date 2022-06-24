@@ -1,9 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "../../../../assets/css/bootstrap.min.css";
 import "./Nav.css";
 
 const Nav = () => {
+  const navigate = useNavigate();
+  function handleSubmit(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('token-init-date')
+    navigate ("/");
+
+  }
   return (
     <ul className="navbar-nav ml-auto">
       <li className="nav-item">
@@ -31,16 +38,8 @@ const Nav = () => {
         </Link>
       </li>
       <li>
-        <Link
-          className="nav-link active"
-          to={"/"}
-          id="navbarDropdown"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="true"
-        >
-          Logout
-        </Link>
+      <button type="button" className="btn btn-dark" onClick={handleSubmit}>Logout</button>
+
       </li>
     </ul>
   );

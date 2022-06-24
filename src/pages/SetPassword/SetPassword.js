@@ -5,13 +5,15 @@ import Title from "../../commons/Title/Title/TitleCreate";
 import "../../assets/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../provider/sessionContext";
+import { Alert } from "../alert/Alert";
 
 const SetPassword = () => {
 
   const { session, setSession } = useContext(SessionContext);
   const [newPassword, setNewPassword] = useState("");
+  const[error,setError] =useState("");
+  const [showError,setShowError] = useState(false)
   const navigate = useNavigate();
-  console.log(session);
 
   function handleChange(name, value) {
     if (name === "newPassword") {
@@ -39,10 +41,10 @@ const SetPassword = () => {
         .then((response) => response.json())
         .then((data) => {
           const { newPassword } = data; //respuesta del back
-          if (data.succes === false) {
-            console.log(data);
+          if (data.success === false) {
+            setError(data.error.errors[0].msg)
+            setShowError(true)
           } else {
-            //window.location.reload(); //recargar la pagina
             navigate("/Notes");
           }
         })
@@ -51,6 +53,7 @@ const SetPassword = () => {
   }
 
   return (
+    <>
     <div>
       <form className="loginBox">
         <Title text=" New Password" />
@@ -70,6 +73,8 @@ const SetPassword = () => {
         <br></br>
       </form>
     </div>
+    {showError?<Alert message={error}/>:null}
+    </>
   );
 };
 

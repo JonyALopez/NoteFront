@@ -9,7 +9,7 @@ const Notes = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <Nav/>
     </nav>
-    <div>
+    <div >
       <AllNotes/>
     </div>
     </div>

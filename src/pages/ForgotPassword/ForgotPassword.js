@@ -5,11 +5,14 @@ import Title from "../../commons/Title/Title/TitleCreate";
 import "../../assets/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../provider/sessionContext";
+import { Alert } from "../alert/Alert";
 
 const ForgotPassword = () => {
 
   
   const [email, setEmail] = useState("");
+  const[error,setError] =useState("");
+  const [showError,setShowError] = useState(false)
   const navigate = useNavigate();
 
   function handleChange(name, value) {
@@ -40,6 +43,8 @@ const ForgotPassword = () => {
           console.log(message);
           if (data.succes === false) {
             console.log(data);
+            setError(data.error)
+            setShowError(true)
           } else {
             console.log(message);
             navigate("/");
@@ -50,6 +55,7 @@ const ForgotPassword = () => {
   }
 
   return (
+    <>
     <div>
       <form className="loginBox">
         <Title text=" Forgot Password" />
@@ -69,6 +75,8 @@ const ForgotPassword = () => {
         <br></br>
       </form>
     </div>
+    {showError?<Alert message={error}/>:null}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext} from "react";
 import "../../../assets/css/all.css";
 import Input from "../../../commons/Input/Input";
 import "../../../commons/TextArea/TextArea.css";
@@ -7,10 +7,13 @@ import Title from "../../../commons/Title/Title/TitleCreate";
 import Nav from "../components/Nav/Nav";
 import "../../../assets/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "../../alert/Alert";
 
 const CreateNotes = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const[error,setError] =useState("");
+  const [showError,setShowError] = useState(false)
   const navigate = useNavigate();
 
   function handleChange(name, value) {
@@ -42,10 +45,9 @@ const CreateNotes = () => {
           const { newNote } = data; //respuesta del back
           if (data.succes === false) {
             console.log(data);
+            setError(data.error)
+            setShowError(true)
           } else {
-            localStorage.setItem("token", data.token); //guardar token en localStorage
-            localStorage.setItem("token-init-date", new Date().getTime()); //guarda hora actual
-            //window.location.reload(); //recargar la pagina
             navigate("/Notes")
           }
         })
@@ -54,6 +56,7 @@ const CreateNotes = () => {
   }
 
   return (
+    <>
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <Nav />
@@ -86,6 +89,8 @@ const CreateNotes = () => {
         <br></br>
       </form>
     </div>
+    {showError?<Alert message={error}/>:null}
+    </>
   );
 };
 

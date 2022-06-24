@@ -3,10 +3,13 @@ import "../../assets/css/all.css";
 import Title from "./components/Title/TitleSingUp";
 import Input from "../../commons/Input/Input";
 import { Link, useNavigate } from "react-router-dom";
+import { Alert } from "../alert/Alert";
 
 const SingUp = () => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
+  const[error,setError] =useState("");
+  const [showError,setShowError] = useState(false)
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -42,7 +45,8 @@ const SingUp = () => {
         .then((data) => {
           const { validation } = data; //respuesta del back
           if (data.succes === false) {
-            console.log(data);
+            setError(data.error)
+            setShowError(true)
           } else {
             console.log(data);
             localStorage.setItem("token", data.token); //guardar token en localStorage
@@ -56,6 +60,7 @@ const SingUp = () => {
   }
 
   return (
+    <>
     <form className="loginBox">
       <Title text=" Registre" />
       <br></br>
@@ -93,6 +98,8 @@ const SingUp = () => {
       <br></br>
       <Link to={"/"}>Login</Link>
     </form>
+    {showError?<Alert message={error}/>:null}
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ const Input =({atribute,handleChange,params}) =>{  //descomposicion
             type={atribute.type}
             placeholder={atribute.placeholder}
             onChange={(e)=>handleChange(e.target.name, e.target.value)} //uso de estados
-            className= 'regular-style'
+            className= 'regular-style form-control'
             />
         </div>
     )

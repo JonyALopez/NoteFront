@@ -23,13 +23,22 @@ export const AppRouter = () => {
     }, [])
 
     const validateToken = async() => {
-        await fetch('https://apinot3s.herokuapp.com/api/user/validationToken')
-        .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                const { menssage } = data;
-            });
-
+        const token = localStorage.getItem('token');
+        if (token) {
+            await fetch('https://apinot3s.herokuapp.com/api/user/validationToken',{
+            headers:{
+                'x-token':token
+            }
+        }).then(res => res.json())
+        .then(data =>{
+            const {message} =data
+            console.log(message)
+        })
+        } else {
+            console.log('no llego al token')
+            
+        }
+        
     }
 
 
